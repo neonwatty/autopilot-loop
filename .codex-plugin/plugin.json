@@ -1,0 +1,37 @@
+{
+  "name": "autopilot-loop",
+  "version": "0.1.0",
+  "description": "Reusable agent loop for turning scratchwork ideas into iterated, judged implementation work.",
+  "author": {
+    "name": "neonwatty",
+    "url": "https://github.com/neonwatty"
+  },
+  "homepage": "https://github.com/neonwatty/autopilot-loop",
+  "repository": "https://github.com/neonwatty/autopilot-loop",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "agents",
+    "loop",
+    "scratchwork",
+    "automation"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Autopilot Loop",
+    "shortDescription": "Iterate from scratchwork until meaningful work is exhausted.",
+    "longDescription": "Autopilot Loop packages a reusable Codex skill, state templates, scoring rubrics, and CLI helpers for repeatedly asking what should happen next, implementing the highest-value next task, verifying it, and stopping when an independent judge says further work is not meaningful.",
+    "developerName": "neonwatty",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Autopilot this scratchwork idea.",
+      "Loop on this app until nothing meaningful remains.",
+      "Continue from .agent-loop state."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

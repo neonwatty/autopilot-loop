@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "goal": "",
+  "charter": {
+    "target_users": [],
+    "non_goals": [],
+    "quality_bar": [],
+    "allowed_scope": [],
+    "verification_commands": [],
+    "budgets": {
+      "max_iterations": 8,
+      "max_consecutive_repairs": 2
+    }
+  },
+  "iteration": 0,
+  "completed": [],
+  "open_findings": [],
+  "candidate_tasks": [],
+  "blocked": [],
+  "assumptions": [],
+  "last_verification": [],
+  "judge": {
+    "continue": true,
+    "confidence": 0,
+    "reason": "Loop has not been judged yet.",
+    "next_focus": ""
+  }
+}

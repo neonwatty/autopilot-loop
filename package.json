@@ -1,0 +1,21 @@
+{
+  "name": "autopilot-loop",
+  "version": "0.1.0",
+  "description": "Reusable Codex plugin and CLI for autonomous scratchwork iteration loops.",
+  "type": "module",
+  "bin": {
+    "autopilot-loop": "./scripts/autopilot-loop.mjs"
+  },
+  "scripts": {
+    "validate:skill": "python3 /Users/neonwatty/.codex/skills/.system/skill-creator/scripts/quick_validate.py skills/autopilot-loop",
+    "smoke": "node scripts/autopilot-loop.mjs init --goal \"Smoke test loop\" --dir /tmp/autopilot-loop-smoke --force && node scripts/autopilot-loop.mjs score --dir /tmp/autopilot-loop-smoke && node scripts/autopilot-loop.mjs report --dir /tmp/autopilot-loop-smoke --summary \"Smoke report\""
+  },
+  "keywords": [
+    "codex",
+    "plugin",
+    "agents",
+    "automation"
+  ],
+  "author": "neonwatty",
+  "license": "MIT"
+}
