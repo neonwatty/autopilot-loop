@@ -41,3 +41,25 @@ The CLI is the right first layer for:
 - Cheap smoke testing
 - Git-friendly artifacts
 - Avoiding premature protocol lock-in
+
+## After Two Real Trials
+
+Use the current loop on two different project ideas before adding more infrastructure. For each trial, preserve the generated `.agent-loop` directory and note:
+
+- What the scratchwork idea was
+- How many iterations ran
+- Which audit lenses produced useful work
+- Which tasks were wrongly prioritized
+- Where the state file was too thin or too noisy
+- Which user decisions were needed
+- Which verification commands mattered
+- Why the loop stopped
+
+After both trials, update this plugin in this order:
+
+1. Tighten `skills/autopilot-loop/SKILL.md` where the agent needed more procedural guidance.
+2. Revise the scoring and judge rubrics where task selection or stopping felt wrong.
+3. Add CLI commands only for repeated state operations that were annoying or error-prone.
+4. Consider MCP only if file-based CLI state blocked orchestration.
+
+MCP is justified if the trials reveal a real need for concurrent worker coordination, cross-session supervision, remote loop execution, structured judge calls, or a live UI watching loop state. If the pain is mostly prompt quality or state shape, improve the skill and CLI first.
