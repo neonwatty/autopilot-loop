@@ -18,6 +18,7 @@
   "candidate_tasks": [],
   "blocked": [],
   "assumptions": [],
+  "process_learnings": [],
   "last_verification": [],
   "judge": {
     "continue": true,

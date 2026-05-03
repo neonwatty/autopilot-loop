@@ -1,6 +1,6 @@
 ---
 name: autopilot-loop
-description: Run a reusable autonomous product/code iteration loop from a scratchwork idea or partially built app. Use when the user asks Codex to autopilot a rough idea, repeatedly ask "what's next", continue iterating, inspect an app for gaps and improvements, recurse through build-audit-fix cycles, or stop only when there is nothing meaningful left to do.
+description: Run a reusable autonomous product/code iteration loop from a scratchwork idea or partially built app. Use when the user asks Codex to autopilot a rough idea, repeatedly ask "what's next", continue iterating, inspect an app for gaps and improvements, recurse through build-audit-fix cycles, record reusable loop learnings, or stop only when there is nothing meaningful left to do.
 ---
 
 # Autopilot Loop
@@ -33,6 +33,9 @@ Run one meaningful iteration at a time:
 4. Select either one high-value task or a small batch of independent tasks.
 5. Implement the selected work.
 6. Verify with project-appropriate checks.
+   - If repository automation changed, report local checks, PR checks,
+     post-merge checks, release workflows, and helper automation separately.
+     Classify orchestration races separately from product or release failures.
 7. Update `.agent-loop/state.json` and write `.agent-loop/iterations/NNN-report.md`.
 8. Judge whether to continue using `references/judge-rubric.md`.
 
@@ -41,6 +44,23 @@ Do not use this loop to generate endless polish. Each iteration must leave the a
 ## Audit Lenses
 
 Select lenses from `references/audit-lenses.md` based on project type. Use at least one product/UX lens and one engineering lens before deciding there is nothing meaningful left.
+
+## Process Learnings
+
+When a loop run exposes reusable process behavior, record it outside the target
+product unless the user explicitly wants loop artifacts committed there. See
+`references/process-learnings.md` for current protocol learnings.
+
+During long runs, and before stopping, run a brief reflection checkpoint:
+
+- Record reusable process observations in `.agent-loop/state.json` under
+  `process_learnings`, or in `.agent-loop/process-learnings.md` if state would
+  become noisy.
+- Classify each observation as `local-only`, `candidate-skill-learning`, or
+  `candidate-repo-change`.
+- Propose candidate skill or repo learnings to the user for review.
+- Do not create upstream issues, PRs, or commits for those learnings unless the
+  user explicitly opts in.
 
 ## Stop Rules
 
@@ -63,6 +83,7 @@ Keep `.agent-loop/state.json` concise and factual. Persist:
 - Candidate tasks
 - Current judge decision
 - Verification results
+- Process learnings worth later review
 - Assumptions and blocked items
 
 Never rely on conversation memory as the only source of loop state.
@@ -78,6 +99,8 @@ node scripts/autopilot-loop.mjs init --goal "Build a mobile-first issue triage a
 node scripts/autopilot-loop.mjs score
 node scripts/autopilot-loop.mjs report --summary "Added offline queue retry UI"
 node scripts/autopilot-loop.mjs judge --continue true --reason "High-value gaps remain"
+node scripts/autopilot-loop.mjs learn --classification candidate-skill-learning --text "Reports need separate CI statuses"
+node scripts/autopilot-loop.mjs reflect
 ```
 
 The CLI is intentionally local-file based. Add MCP later only after the loop protocol is stable enough to justify a long-running tool server.

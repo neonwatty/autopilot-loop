@@ -63,3 +63,18 @@ After both trials, update this plugin in this order:
 4. Consider MCP only if file-based CLI state blocked orchestration.
 
 MCP is justified if the trials reveal a real need for concurrent worker coordination, cross-session supervision, remote loop execution, structured judge calls, or a live UI watching loop state. If the pain is mostly prompt quality or state shape, improve the skill and CLI first.
+
+Process-level learnings that should inform future protocol changes live in
+`skills/autopilot-loop/references/process-learnings.md`.
+
+## Opt-In Learning Review
+
+During long runs and before stopping, the skill asks the agent to reflect on
+reusable process learnings. Candidate learnings should be recorded in the target
+project's `.agent-loop/state.json` or `.agent-loop/process-learnings.md` and
+classified as `local-only`, `candidate-skill-learning`, or
+`candidate-repo-change`.
+
+Agents may propose candidate skill or repo learnings for user review, but they
+must not open issues, create PRs, or commit upstream changes unless the user
+explicitly opts in.

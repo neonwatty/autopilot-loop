@@ -107,6 +107,62 @@ function score(flags) {
   console.log(JSON.stringify(state.candidate_tasks, null, 2));
 }
 
+function learningClassification(value) {
+  const classification = String(value || "");
+  const allowed = new Set([
+    "local-only",
+    "candidate-skill-learning",
+    "candidate-repo-change",
+  ]);
+  if (!allowed.has(classification)) {
+    throw new Error(
+      "Learning classification must be local-only, candidate-skill-learning, or candidate-repo-change.",
+    );
+  }
+  return classification;
+}
+
+function learn(flags) {
+  const paths = statePaths(flags.dir);
+  const state = loadState(paths);
+  const text = String(flags.text || "").trim();
+  if (!text) {
+    throw new Error("Learning text is required. Use --text <text>.");
+  }
+  if (!Array.isArray(state.process_learnings)) {
+    state.process_learnings = [];
+  }
+  state.process_learnings.push({
+    at: new Date().toISOString(),
+    classification: learningClassification(flags.classification),
+    text,
+    source: flags.source ? String(flags.source) : "",
+    upstream_review_proposed: false,
+  });
+  writeJson(paths.statePath, state);
+  console.log(JSON.stringify(state.process_learnings.at(-1), null, 2));
+}
+
+function reflect(flags) {
+  const paths = statePaths(flags.dir);
+  const state = loadState(paths);
+  const learnings = Array.isArray(state.process_learnings)
+    ? state.process_learnings
+    : [];
+  const candidates = learnings.filter((learning) => (
+    learning.classification === "candidate-skill-learning"
+    || learning.classification === "candidate-repo-change"
+  ));
+  if (candidates.length === 0) {
+    console.log("No candidate skill or repo learnings recorded.");
+    return;
+  }
+  console.log(JSON.stringify({
+    candidates,
+    review_note: "Propose these to the user for review. Do not create upstream issues, PRs, or commits without explicit opt-in.",
+  }, null, 2));
+}
+
 function report(flags) {
   const paths = statePaths(flags.dir);
   mkdirSync(paths.iterationsDir, { recursive: true });
@@ -124,6 +180,13 @@ ${summary}
 ## Verification
 
 ${verification}
+
+## Process Learning Reflection
+
+- Local-only:
+- Candidate skill learning:
+- Candidate repo change:
+- Upstream review proposed:
 
 ## Judge Decision
 
@@ -160,6 +223,8 @@ function help() {
 Commands:
   init --goal <text> [--dir <path>] [--max-iterations <n>] [--force]
   score [--dir <path>]
+  learn --classification local-only|candidate-skill-learning|candidate-repo-change --text <text> [--source <text>] [--dir <path>]
+  reflect [--dir <path>]
   report --summary <text> [--verification <text>] [--dir <path>]
   judge --continue true|false --reason <text> [--confidence <0..1>] [--next-focus <text>] [--dir <path>]
 `);
@@ -170,6 +235,8 @@ const { command, flags } = parseArgs(process.argv.slice(2));
 try {
   if (command === "init") init(flags);
   else if (command === "score") score(flags);
+  else if (command === "learn") learn(flags);
+  else if (command === "reflect") reflect(flags);
   else if (command === "report") report(flags);
   else if (command === "judge") judge(flags);
   else help();
