@@ -42,6 +42,12 @@ Do not use this loop to generate endless polish. Each iteration must leave the a
 
 Select lenses from `references/audit-lenses.md` based on project type. Use at least one product/UX lens and one engineering lens before deciding there is nothing meaningful left.
 
+## Process Learnings
+
+When a loop run exposes reusable process behavior, record it outside the target
+product unless the user explicitly wants loop artifacts committed there. See
+`references/process-learnings.md` for current protocol learnings.
+
 ## Stop Rules
 
 Stop when any hard stop occurs:
