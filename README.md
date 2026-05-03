@@ -1,5 +1,7 @@
 # Autopilot Loop
 
+[![Discord](https://img.shields.io/badge/Discord-Join%20Server-7289da?style=flat&logo=discord&logoColor=white)](https://discord.gg/7xsxU4ZG6A)
+
 Reusable Codex plugin for turning a scratchwork idea into repeated build, audit, fix, verify, and judge iterations.
 
 ## What It Provides
